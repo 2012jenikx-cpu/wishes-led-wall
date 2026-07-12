@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CSI Christ Church - 640x384 LED Display</title>
+    <title>CSI Christ Church - Premium Layout</title>
     <style>
-        /* Exact Sizing Constraints for HDPlayer 640x384 Area */
+        /* Sizing Constraints for HDPlayer 640x384 Area */
         * {
             box-sizing: border-box;
             margin: 0;
@@ -20,146 +20,153 @@
             color: #ffffff;
         }
         
-        /* The Canvas perfectly matches your HDPlayer width and height */
+        /* Master Layout Canvas */
         .canvas {
             width: 640px;
             height: 384px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            background-size: 100% 100%; /* Forces the background image to fill 640x384 exactly */
+            align-items: center;
+            padding: 16px;
+            background-size: 100% 100%;
             background-position: center;
-            transition: background-image 0.6s ease-in-out;
+            transition: background-image 0.6s cubic-bezier(0.16, 1, 0.3, 1);
         }
         
-        /* Optimized Header Banner for 384px Height */
-        .header-banner {
-            background: linear-gradient(180deg, #ffd700 0%, #cca100 100%);
-            color: #000000;
+        /* Modern Minimalist Floating Church Tag */
+        .church-tag {
             text-align: center;
-            padding: 6px 0;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.8);
             z-index: 10;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 4px 20px;
+            border-radius: 50px;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
         }
-        .header-banner h1 {
-            font-size: 26px;
+        .church-tag h1 {
+            color: #ffd700; /* Royal Gold */
+            font-size: 18px;
             font-weight: 900;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
             line-height: 1.1;
         }
-        .header-banner p {
+        .church-tag p {
             font-family: 'Arial', sans-serif;
-            font-size: 12px;
+            color: #ffffff;
+            font-size: 9px;
             font-weight: bold;
-            letter-spacing: 2px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
             margin-top: 1px;
         }
 
-        /* Viewport adjusted to maximize the remaining 384px vertical workspace */
+        /* Floating Centerpiece Showcase Card */
         .viewport {
-            flex-grow: 1;
+            width: 100%;
             display: flex;
             justify-content: center;
             align-items: center;
-            text-align: center;
-            padding: 0 10px;
+            margin: 10px 0;
             z-index: 5;
         }
-        .slide-content {
-            width: 100%;
-            animation: slideIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-            background: rgba(0, 0, 0, 0.72); /* Translucent shield layer for readability */
-            padding: 14px 10px;
-            border-radius: 10px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
+        .slide-card {
+            width: 560px;
+            background: linear-gradient(135deg, rgba(10, 10, 15, 0.85) 0%, rgba(0, 0, 0, 0.9) 100%);
+            padding: 18px 20px;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 12px 25px rgba(0,0,0,0.8);
+            animation: cardPop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
         }
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+        @keyframes cardPop {
+            from { opacity: 0; transform: scale(0.92) translateY(10px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
         }
 
-        /* Font Sizes re-balanced for 640x384 space */
-        .line-1 {
-            font-size: 28px;
+        /* Elegantly Formatted Typography Lines */
+        .line-names {
+            font-size: 26px;
             font-weight: 900;
             color: #ffffff;
             line-height: 1.2;
-            margin-bottom: 10px;
-            text-shadow: 0 3px 10px rgba(0, 0, 0, 1), 0 0 20px rgba(0, 0, 0, 0.8);
+            margin-bottom: 12px;
+            text-shadow: 0 4px 8px rgba(0,0,0,1);
         }
         
-        .line-2 {
-            font-size: 22px;
+        /* Modern Floating Badge Pill instead of full-width ribbon */
+        .badge-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 12px;
+        }
+        .celebration-badge {
+            font-size: 16px;
             font-weight: 900;
             color: #000000;
-            padding: 8px 0;
-            width: 100%;
+            padding: 6px 24px;
+            border-radius: 50px;
             text-transform: uppercase;
             letter-spacing: 1px;
-            margin-bottom: 12px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.6);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.4);
         }
-        .wedding-ribbon {
-            background: linear-gradient(90deg, #ffe033 0%, #ff9900 100%);
+        .wedding-theme {
+            background: linear-gradient(90deg, #ffe033 0%, #ffaa00 100%);
         }
-        .birthday-ribbon {
+        .birthday-theme {
             background: linear-gradient(90deg, #00f2fe 0%, #0072ff 100%);
         }
 
-        .line-3 {
-            font-size: 20px;
+        .line-event-date {
+            font-size: 18px;
             font-weight: 900;
             color: #ff2a75;
             text-transform: uppercase;
-            letter-spacing: 1.5px;
-            text-shadow: 0 2px 5px rgba(0,0,0,1);
+            letter-spacing: 2px;
+            text-shadow: 0 2px 4px rgba(0,0,0,1);
         }
         
-        /* Auto-Spliced Extra Family Meta Line */
-        .line-extra {
+        /* Sub-metadata line */
+        .line-relation {
             font-family: 'Arial', sans-serif;
-            font-size: 16px;
+            font-size: 14px;
             font-weight: 900;
             color: #00ffcc;
             margin-top: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
             text-shadow: 0 2px 4px rgba(0,0,0,1);
-            letter-spacing: 0.5px;
         }
     </style>
 </head>
 <body>
 
     <div class="canvas" id="main-canvas">
-        <div class="header-banner">
+        <!-- Floating Header -->
+        <div class="church-tag">
             <h1>CSI Christ Church</h1>
-            <p>COIMBATORE</p>
+            <p>Coimbatore</p>
         </div>
 
+        <!-- Center Stage Presenter -->
         <div class="viewport">
-            <div id="display-card" class="slide-content"></div>
+            <div id="display-card" class="slide-card"></div>
         </div>
         
-        <div style="height: 10px;"></div>
+        <!-- Bottom Safety Spacer to Frame Content Perfectly -->
+        <div style="height: 5px;"></div>
     </div>
 
     <script>
-        /************************************************************************
-         * BACKGROUND IMAGE CONFIG
-         * These are RELATIVE paths — the images must sit in the SAME folder
-         * as this HTML file, in the same branch of your GitHub repo.
-         * File names are case-sensitive: "Birthday.png" and "wedding.png"
-         * must match EXACTLY what's shown in your repo's file listing.
-         * If the images are inside a subfolder (e.g. "images/"), use:
-         *   wedding: "url('images/wedding.png')"
-         ************************************************************************/
+        // Points directly to the local images inside your GitHub root directory
         const bgImages = {
             wedding: "url('wedding.png')",
-            birthday: "url('Birthday.png')"
+            birthday: "url('birthday.png')"
         };
 
         /************************************************************************
-         * DATA REGISTRY ZONE (Put your 20 weddings and 10 birthdays here)
+         * DATA REGISTRY ZONE (Add your 20 weddings and 10 birthdays here)
          ************************************************************************/
         const rawData = [
             // === WEDDINGS ===
@@ -176,7 +183,7 @@
         const mainCanvas = document.getElementById('main-canvas');
         const displayCard = document.getElementById('display-card');
         let currentIndex = 0;
-        const slideDuration = 6000; // 6 seconds per wish slide
+        const slideDuration = 6000;
 
         function updateSlide() {
             if (rawData.length === 0) return;
@@ -185,20 +192,20 @@
             const currentYear = new Date().getFullYear();
             const milestone = currentYear - parseInt(item.year);
             
-            let line1 = "";
-            let line2 = "";
-            let line3 = "";
-            let extraLineHTML = "";
-            let ribbonClass = "";
+            let namesLine = "";
+            let badgeText = "";
+            let dateLine = "";
+            let relationLineHTML = "";
+            let themeClass = "";
 
             if (item.husband && item.wife) {
                 let hName = item.husband.replace(/^(Mr|Mrs|Ms)\.?\s+/i, '');
                 let wName = item.wife.replace(/^(Mr|Mrs|Ms)\.?\s+/i, '');
                 
-                line1 = `Mr. ${hName}<br>& Mrs. ${wName}`;
-                line2 = `Celebrating ${milestone} Years`;
-                line3 = `Wedding Day: ${item.date}`;
-                ribbonClass = "wedding-ribbon";
+                namesLine = `Mr. ${hName} & Mrs. ${wName}`;
+                badgeText = `Celebrating ${milestone} Years`;
+                dateLine = `Wedding Day: ${item.date}`;
+                themeClass = "wedding-theme";
                 mainCanvas.style.backgroundImage = bgImages.wedding;
             } 
             else if (item.name) {
@@ -211,22 +218,24 @@
                     rawName = rawName.replace(match[0], "").trim();
                 }
 
-                line1 = rawName;
-                line2 = `Celebrating ${milestone} Years of Life`;
-                line3 = `Birthday: ${item.date}`;
-                ribbonClass = "birthday-ribbon";
+                namesLine = rawName;
+                badgeText = `${milestone} Years of Life`;
+                dateLine = `Birthday: ${item.date}`;
+                themeClass = "birthday-theme";
                 mainCanvas.style.backgroundImage = bgImages.birthday;
                 
                 if (detectedExtra) {
-                    extraLineHTML = `<div class="line-extra">${detectedExtra.toUpperCase()}</div>`;
+                    relationLineHTML = `<div class="line-relation">${detectedExtra}</div>`;
                 }
             }
 
             displayCard.innerHTML = `
-                <div class="line-1">${line1}</div>
-                <div class="line-2 ${ribbonClass}">${line2}</div>
-                <div class="line-3">${line3}</div>
-                ${extraLineHTML}
+                <div class="line-names">${namesLine}</div>
+                <div class="badge-container">
+                    <div class="celebration-badge ${themeClass}">${badgeText}</div>
+                </div>
+                <div class="line-event-date">${dateLine}</div>
+                ${relationLineHTML}
             `;
 
             displayCard.style.animation = 'none';
