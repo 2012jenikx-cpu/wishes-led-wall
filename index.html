@@ -144,10 +144,18 @@
     </div>
 
     <script>
-        // High-quality live internet-hosted backgrounds
+        /************************************************************************
+         * BACKGROUND IMAGE CONFIG
+         * These are RELATIVE paths — the images must sit in the SAME folder
+         * as this HTML file, in the same branch of your GitHub repo.
+         * File names are case-sensitive: "Birthday.png" and "wedding.png"
+         * must match EXACTLY what's shown in your repo's file listing.
+         * If the images are inside a subfolder (e.g. "images/"), use:
+         *   wedding: "url('images/wedding.png')"
+         ************************************************************************/
         const bgImages = {
-            wedding: "url('https://i.ibb.co/LdxYVq9/wedding-bg.png')",
-            birthday: "url('https://i.ibb.co/VvZ6W5p/birthday-bg.png')"
+            wedding: "url('wedding.png')",
+            birthday: "url('Birthday.png')"
         };
 
         /************************************************************************
