@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSI Christ Church - Live Connected LED Panel</title>
+    <style>
+        /* Strict 480p 4:3 LED Wall Sizing Constraints */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            width: 640px;
+            height: 480px;
+            overflow: hidden;
+            font-family: 'Arial Black', 'Impact', sans-serif;
+            background: #000000;
+            color: #ffffff;
+        }
+        .canvas {
+            width: 640px;
+            height: 480px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            background-size: cover;
+            background-position: center;
+            transition: background-image 0.6s ease-in-out;
+        }
+        
+        /* High-Contrast Full Width Top Banner Header */
+        .header-banner {
+            background: #ffd700; /* Pure gold tone banner */
+            color: #000000;
+            text-align: center;
+            padding: 10px 0;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.9);
+        }
+        .header-banner h1 {
+            font-size: 28px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            line-height: 1.1;
+        }
+        .header-banner p {
+            font-family: 'Arial', sans-serif;
+            font-size: 13px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            margin-top: 2px;
+        }
+
+        /* Content Viewport Frame */
+        .viewport {
+            flex-grow: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 15px;
+        }
+        .slide-content {
+            width: 100%;
+            animation: slideIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            background: rgba(0, 0, 0, 0.70); /* Semi-transparent shield panel to maximize typography visibility over live photos */
+            padding: 22px 15px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+        }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Bold 3-Line + Extra Automated Layout */
+        .line-1 {
+            font-size: 32px;
+            font-weight: 900;
+            color: #ffffff;
+            line-height: 1.2;
+            margin-bottom: 16px;
+            text-shadow: 0 4px 12px rgba(0, 0, 0, 1), 0 0 25px rgba(0, 0, 0, 0.9);
+        }
+        
+        .line-2 {
+            font-size: 26px;
+            font-weight: 900;
+            color: #000000;
+            padding: 12px 0;
+            width: 100%;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 18px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.7);
+        }
+        .wedding-ribbon {
+            background: linear-gradient(90deg, #ffe033 0%, #ff9900 100%);
+        }
+        .birthday-ribbon {
+            background: linear-gradient(90deg, #00f2fe 0%, #0072ff 100%);
+        }
+
+        .line-3 {
+            font-size: 24px;
+            font-weight: 900;
+            color: #ff2a75; /* Neon Red/Pink for high readability */
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 3px 6px rgba(0,0,0,1);
+        }
+        
+        /* Auto-generated Extra Line styling */
+        .line-extra {
+            font-family: 'Arial', sans-serif;
+            font-size: 18px;
+            font-weight: 900;
+            color: #00ffcc; /* Vivid neon mint */
+            margin-top: 14px;
+            text-shadow: 0 2px 5px rgba(0,0,0,1);
+            letter-spacing: 0.5px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="canvas" id="main-canvas">
+        <div class="header-banner">
+            <h1>CSI Christ Church</h1>
+            <p>COIMBATORE</p>
+        </div>
+
+        <div class="viewport">
+            <div id="display-card" class="slide-content"></div>
+        </div>
+        
+        <div style="height: 15px;"></div>
+    </div>
+
+    <script>
+        // Internet-hosted high-resolution backgrounds mapping directly to your panels
+        const bgImages = {
+            wedding: "url('https://i.ibb.co/LdxYVq9/wedding-bg.png')",
+            birthday: "url('https://i.ibb.co/VvZ6W5p/birthday-bg.png')"
+        };
+
+        /************************************************************************
+         * DATA REGISTRY ZONE
+         * Paste your 20 Wedding and 10 Birthday data models below.
+         ************************************************************************/
+        const rawData = [
+            // === WEDDING DATA ENTRIES ===
+            { husband: "ANUBALAN S", wife: "NIRMALA A", year: "2001", date: "25th June" },
+            { husband: "JENIX G", wife: "RINISHA ANGELIN A", year: "2018", date: "25th June" },
+            { husband: "JOHNSON J", wife: "AGNES ROSELINE", year: "2003", date: "25th June" },
+            { husband: "JOHNSON KOIL RAJAN R D", wife: "AMUTHA RAJAN R", year: "1996", date: "25th June" },
+
+            // === BIRTHDAY DATA ENTRIES ===
+            { name: "Mr VASAN DEVARAJ", year: "1944", date: "26th June" }, 
+            { name: "Mrs JEBA VINOLIYA A W/O AUGUSTIN GNANASEKAR", year: "1979", date: "26th June" },
+            { name: "Mr ASWIN DEEPAK N S/O NATARAJAN P", year: "1998", date: "26th June" }
+        ];
+
+        const mainCanvas = document.getElementById('main-canvas');
+        const displayCard = document.getElementById('display-card');
+        let currentIndex = 0;
+        const slideDuration = 6000; // 6 seconds display time per screen slide
+
+        function updateSlide() {
+            if (rawData.length === 0) return;
+            
+            const item = rawData[currentIndex];
+            const currentYear = new Date().getFullYear();
+            const milestone = currentYear - parseInt(item.year);
+            
+            let line1 = "";
+            let line2 = "";
+            let line3 = "";
+            let extraLineHTML = "";
+            let ribbonClass = "";
+
+            // 1. AUTOMATED WEDDING ENGINE
+            if (item.husband && item.wife) {
+                let hName = item.husband.replace(/^(Mr|Mrs|Ms)\.?\s+/i, '');
+                let wName = item.wife.replace(/^(Mr|Mrs|Ms)\.?\s+/i, '');
+                
+                line1 = `Mr. ${hName}<br>& Mrs. ${wName}`;
+                line2 = `Celebrating ${milestone} Years`;
+                line3 = `Wedding Day: ${item.date}`;
+                ribbonClass = "wedding-ribbon";
+                mainCanvas.style.backgroundImage = bgImages.wedding;
+            } 
+            // 2. AUTOMATED BIRTHDAY ENGINE
+            else if (item.name) {
+                let rawName = item.name;
+                let detectedExtra = "";
+
+                // Automated split logic handles formatting relationship lines natively
+                const match = rawName.match(/\s+(W\/O|S\/O|D\/O|H\/O)\s+.+$/i);
+                if (match) {
+                    detectedExtra = match[0].trim();
+                    rawName = rawName.replace(match[0], "").trim();
+                }
+
+                line1 = rawName;
+                line2 = `Celebrating ${milestone} Years of Life`;
+                line3 = `Birthday: ${item.date}`;
+                ribbonClass = "birthday-ribbon";
+                mainCanvas.style.backgroundImage = bgImages.birthday;
+                
+                if (detectedExtra) {
+                    extraLineHTML = `<div class="line-extra">${detectedExtra.toUpperCase()}</div>`;
+                }
+            }
+
+            // Inject Content Elements
+            displayCard.innerHTML = `
+                <div class="line-1">${line1}</div>
+                <div class="line-2 ${ribbonClass}">${line2}</div>
+                <div class="line-3">${line3}</div>
+                ${extraLineHTML}
+            `;
+
+            // Reset CSS text transition animation triggers
+            displayCard.style.animation = 'none';
+            displayCard.offsetHeight; 
+            displayCard.style.animation = null;
+
+            currentIndex = (currentIndex + 1) % rawData.length;
+        }
+
+        updateSlide();
+        setInterval(updateSlide, slideDuration);
+    </script>
+</body>
+</html>
