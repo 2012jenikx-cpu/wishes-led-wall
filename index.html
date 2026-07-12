@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Church LED Display - Celebration Showcase</title>
     <style>
-        /* Base configuration directly from your working template */
+        /* Base configuration derived from your working LED wall template */
         body, html { 
             margin: 0; 
             padding: 0; 
@@ -23,7 +23,7 @@
             height: 100%; 
             background-size: cover; 
             background-position: center; 
-            transition: opacity 1s ease-in-out; 
+            transition: background-image 0.8s ease-in-out; 
         }
         .overlay { 
             position: absolute; 
@@ -31,7 +31,7 @@
             left: 0; 
             width: 100%; 
             height: 100%; 
-            background: radial-gradient(circle, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.65) 100%); 
+            background: radial-gradient(circle, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.7) 100%); 
             z-index: 5; 
         }
         .container { 
@@ -47,21 +47,21 @@
             box-sizing: border-box;
         }
 
-        /* Modern Frosted Glass Presentation Card */
+        /* Modern Premium Glassmorphic Container */
         .ui-card {
             background: rgba(15, 15, 25, 0.75);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            padding: 30px 40px;
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            padding: 35px 40px;
             border-radius: 24px;
             border: 1px solid rgba(255, 255, 255, 0.12);
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
             max-width: 90%;
             width: 580px;
             box-sizing: border-box;
         }
         
-        /* Modern Premium Heading Pill */
+        /* Modern Premium Dynamic Heading Badge */
         #heading-line {
             display: inline-block;
             font-size: 16px;
@@ -69,46 +69,35 @@
             font-weight: 800;
             text-transform: uppercase;
             letter-spacing: 3px;
-            margin-bottom: 20px;
+            margin-bottom: 22px;
             background: rgba(255, 215, 0, 0.1);
             padding: 6px 20px;
             border-radius: 50px;
             border: 1px solid rgba(255, 215, 0, 0.25);
         }
 
-        /* Clean High-Contrast Typography Layers */
+        /* High-Performance Readable Typography Layers */
         #names-line { 
-            font-size: 38px; 
+            font-size: 36px; 
             font-weight: 900; 
             color: #ffffff;
-            text-shadow: 0 4px 12px rgba(0,0,0,0.5);
-            line-height: 1.3; 
+            text-shadow: 0 4px 12px rgba(0,0,0,0.6);
+            line-height: 1.4; 
             margin-bottom: 16px; 
         }
         #milestone-line { 
             font-size: 22px; 
             color: rgba(255, 255, 255, 0.9);
             font-weight: 600; 
-            text-shadow: 0 2px 4px rgba(0,0,0,0.4);
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
             margin-bottom: 18px;
         }
         #date-line {
             font-size: 20px;
-            color: #ff477e; /* Radiant high-visibility accent */
+            color: #ff477e; 
             font-weight: 800;
             text-transform: uppercase;
             letter-spacing: 1.5px;
-        }
-        
-        /* Relationship Subtext */
-        #relation-line {
-            font-size: 16px;
-            color: #00f5d4; /* Vivid premium cyan */
-            font-weight: 700;
-            margin-top: 12px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            opacity: 0.95;
         }
         
         .watermark { 
@@ -129,97 +118,92 @@
     <div class="overlay"></div>
     
     <div class="container">
-        <!-- Modern UI Wrapper -->
         <div class="ui-card">
             <div id="heading-line"></div>
             <div id="names-line">Loading...</div>
             <div id="milestone-line"></div>
             <div id="date-line"></div>
-            <div id="relation-line"></div>
         </div>
     </div>
     
     <div class="watermark">MEDIATEAM</div>
 
     <script>
+        /************************************************************************
+         * DISPLAY SETTINGS (DURATION CONTROL)
+         * Change 7000 to your desired speed (in milliseconds)
+         ************************************************************************/
+        const slideDuration = 3000; // 7000 = 7 seconds per slide
+
+        // Binds local .jpeg background image files from your repository root
         const bgImages = {
             wedding: "url('wedding.jpeg')",
             birthday: "url('birthday.jpeg')"
         };
 
         /************************************************************************
-         * DATA REGISTRY ZONE (Add your 20 weddings and 10 birthdays here)
+         * DATA REGISTRY ZONE
+         * Paste, add, modify or remove items safely here. 
+         * Ensure every intermediate item ends with a comma (,).
          ************************************************************************/
         const rawData = [
             // === WEDDINGS ===
             { husband: "ANUBALAN S", wife: "NIRMALA A", year: "2001", date: "25th June" },
-			{ husband: "JENIX G", wife: "RINISHA ANGELIN A", year: "2018", date: "25th June" },
+            { husband: "JENIX G", wife: "RINISHA ANGELIN A", year: "2018", date: "25th June" },
             { husband: "JOHNSON KOIL RAJAN R D", wife: "AMUTHA RAJAN R", year: "1996", date: "25th June" },
 
             // === BIRTHDAYS ===
             { name: "Mr VASAN DEVARAJ", year: "1944", date: "26th June" }, 
             { name: "Mrs JEBA VINOLIYA A ", year: "1979", date: "26th June" },
-            { name: "Mr ASWIN DEEPAK N ", year: "1998", date: "26th June" }
+            { name: "Mr ASWIN DEEPAK N", year: "1998", date: "26th June" }
         ];
 
         let currentIndex = 0;
-        const slideDuration = 7000; 
 
         function refreshContent() {
-            if (rawData.length === 0) return;
-            
-            const item = rawData[currentIndex];
-            const currentYear = new Date().getFullYear();
-            const milestone = currentYear - parseInt(item.year);
-            
-            let headingText = "";
-            let names = "";
-            let milestoneText = "";
-            let dateText = "";
-            let relationText = "";
-
-            if (item.husband && item.wife) {
-                let hName = item.husband.replace(/^(Mr|Mrs|Ms)\.?\s+/i, '');
-                let wName = item.wife.replace(/^(Mr|Mrs|Ms)\.?\s+/i, '');
+            try {
+                if (!rawData || rawData.length === 0) return;
                 
-                headingText = "Wedding Wish";
-                names = `Mr. ${hName}<br>& Mrs. ${wName}`;
-                milestoneText = `Celebrating ${milestone} Years of Marriage`;
-                dateText = `Wedding Day: ${item.date}`;
-                document.getElementById('bg').style.backgroundImage = bgImages.wedding;
-            } 
-            else if (item.name) {
-                let rawName = item.name;
-                let detectedExtra = "";
+                const item = rawData[currentIndex];
+                const currentYear = new Date().getFullYear();
+                
+                let parsedYear = parseInt(item.year);
+                if (isNaN(parsedYear)) parsedYear = currentYear;
+                const milestone = currentYear - parsedYear;
+                
+                let headingText = "";
+                let names = "";
+                let milestoneText = "";
+                let dateText = "";
 
-                const match = rawName.match(/\s+(W\/O|S\/O|D\/O|H\/O)\s+.+$/i);
-                if (match) {
-                    detectedExtra = match[0].trim();
-                    rawName = rawName.replace(match[0], "").trim();
+                if (item.husband && item.wife) {
+                    let hName = item.husband.replace(/^(Mr|Mrs|Ms)\.?\s+/i, '');
+                    let wName = item.wife.replace(/^(Mr|Mrs|Ms)\.?\s+/i, '');
+                    
+                    headingText = "Wedding Wish";
+                    names = `Mr. ${hName}<br>& Mrs. ${wName}`;
+                    milestoneText = `Celebrating ${milestone} Years of Marriage`;
+                    dateText = `Wedding Day: ${item.date || ''}`;
+                    document.getElementById('bg').style.backgroundImage = bgImages.wedding;
+                } 
+                else if (item.name) {
+                    headingText = "Birthday Wish";
+                    names = item.name; 
+                    milestoneText = `Celebrating ${milestone} Years of Life`;
+                    dateText = `Birthday: ${item.date || ''}`;
+                    document.getElementById('bg').style.backgroundImage = bgImages.birthday;
                 }
 
-                headingText = "Birthday Wish";
-                names = rawName;
-                milestoneText = `Celebrating ${milestone} Years of Life`;
-                dateText = `Birthday: ${item.date}`;
-                relationText = detectedExtra;
-                document.getElementById('bg').style.backgroundImage = bgImages.birthday;
-            }
+                document.getElementById('heading-line').innerText = headingText;
+                document.getElementById('names-line').innerHTML = names;
+                document.getElementById('milestone-line').innerText = milestoneText;
+                document.getElementById('date-line').innerText = dateText;
 
-            document.getElementById('heading-line').innerText = headingText;
-            document.getElementById('names-line').innerHTML = names;
-            document.getElementById('milestone-line').innerText = milestoneText;
-            document.getElementById('date-line').innerText = dateText;
-            
-            const relElement = document.getElementById('relation-line');
-            if (relationText) {
-                relElement.innerText = relationText;
-                relElement.style.display = "block";
-            } else {
-                relElement.style.display = "none";
+            } catch (error) {
+                console.error("Gracefully caught slide execution error at index: " + currentIndex, error);
+            } finally {
+                currentIndex = (currentIndex + 1) % rawData.length;
             }
-
-            currentIndex = (currentIndex + 1) % rawData.length;
         }
 
         refreshContent();
