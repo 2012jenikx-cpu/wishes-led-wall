@@ -49,8 +49,6 @@
 
         /* Modern Premium Glassmorphic Container */
         .ui-card {
-            background: ;
-            backdrop-filter: blur(14px);
             -webkit-backdrop-filter: blur(14px);
             padding: 35px 40px;
             border-radius: 24px;
@@ -92,10 +90,16 @@
         }
         #date-line {
             font-size: 25px;
-            color: #c95757; 
+            color: #cd00bc; 
             font-weight: 800;
             text-transform: uppercase;
             letter-spacing: 2px;
+        }
+        #date-line .day-number {
+            font-size: 42px;
+            font-weight: 900;
+            display: inline-block;
+            margin-right: 4px;
         }
         
         .watermark { 
@@ -127,11 +131,11 @@
     <div class="watermark">MEDIATEAM</div>
 
     <script>
-        /************************************************************************
+        /************************
          * DISPLAY SETTINGS (DURATION CONTROL)
-         * Change 7000 to your desired speed (in milliseconds)
-         ************************************************************************/
-        const slideDuration = 3000; // 7000 = 7 seconds per slide
+         * Change 3000 to your desired speed (in milliseconds)
+         ************************/
+        const slideDuration = 3000; // 3000 = 3 seconds per slide
 
         // Binds local .jpeg background image files from your repository root
         const bgImages = {
@@ -139,24 +143,37 @@
             birthday: "url('birthday.jpeg')"
         };
 
-        /************************************************************************
+        /************************
          * DATA REGISTRY ZONE
          * Paste, add, modify or remove items safely here. 
          * Ensure every intermediate item ends with a comma (,).
-         ************************************************************************/
+         * NOTE: "year" is only used for WEDDINGS (to calculate years married).
+         * For BIRTHDAYS, "year" is not required/used at all anymore -
+         * only the name and date are shown.
+         ************************/
         const rawData = [
             // === WEDDINGS ===
             { husband: "ANUBALAN S", wife: "NIRMALA A", year: "2001", date: "25th June" },
             { husband: "JENIX G", wife: "RINISHA ANGELIN A", year: "2018", date: "25th June" },
             { husband: "JOHNSON KOIL RAJAN R D", wife: "AMUTHA RAJAN R", year: "1996", date: "25th June" },
 
-            // === BIRTHDAYS ===
-            { name: "Mr VASAN DEVARAJ", year: "1944", date: "26th June" }, 
-            { name: "Mrs JEBA VINOLIYA A ", year: "1979", date: "26th June" },
-            { name: "Mr ASWIN DEEPAK N", year: "1998", date: "26th June" }
+            // === BIRTHDAYS (no year needed) ===
+            { name: "Mr VASAN DEVARAJ", date: "26th June" }, 
+            { name: "Mrs JEBA VINOLIYA A", date: "26th June" },
+            { name: "Mr ASWIN DEEPAK N", date: "26th June" }
         ];
 
         let currentIndex = 0;
+
+        // Wraps the leading number in a date string (e.g. "26th June") in a bigger span
+        function formatDateBig(dateStr, label) {
+            if (!dateStr) return "";
+            const match = dateStr.match(/^(\d+)(.*)$/);
+            if (match) {
+                return `${label}: <span class="day-number">${match[1]}</span>${match[2]}`;
+            }
+            return `${label}: ${dateStr}`;
+        }
 
         function refreshContent() {
             try {
@@ -165,37 +182,37 @@
                 const item = rawData[currentIndex];
                 const currentYear = new Date().getFullYear();
                 
-                let parsedYear = parseInt(item.year);
-                if (isNaN(parsedYear)) parsedYear = currentYear;
-                const milestone = currentYear - parsedYear;
-                
                 let headingText = "";
                 let names = "";
                 let milestoneText = "";
-                let dateText = "";
+                let dateHTML = "";
 
                 if (item.husband && item.wife) {
                     let hName = item.husband.replace(/^(Mr|Mrs|Ms)\.?\s+/i, '');
                     let wName = item.wife.replace(/^(Mr|Mrs|Ms)\.?\s+/i, '');
                     
+                    let parsedYear = parseInt(item.year);
+                    if (isNaN(parsedYear)) parsedYear = currentYear;
+                    const milestone = currentYear - parsedYear;
+
                     headingText = "Wedding Wish";
                     names = `Mr. ${hName}<br>& Mrs. ${wName}`;
                     milestoneText = `Celebrating ${milestone} Years of Marriage`;
-                    dateText = `Wedding Day: ${item.date || ''}`;
+                    dateHTML = formatDateBig(item.date, "Wedding Day");
                     document.getElementById('bg').style.backgroundImage = bgImages.wedding;
                 } 
                 else if (item.name) {
                     headingText = "Birthday Wish";
-                    names = item.name; 
-                    milestoneText = `Celebrating ${milestone} Years of Life`;
-                    dateText = `Birthday: ${item.date || ''}`;
+                    names = item.name;
+                    milestoneText = "Celebrating Joyful Birthday";
+                    dateHTML = formatDateBig(item.date, "Birthday");
                     document.getElementById('bg').style.backgroundImage = bgImages.birthday;
                 }
 
                 document.getElementById('heading-line').innerText = headingText;
                 document.getElementById('names-line').innerHTML = names;
                 document.getElementById('milestone-line').innerText = milestoneText;
-                document.getElementById('date-line').innerText = dateText;
+                document.getElementById('date-line').innerHTML = dateHTML;
 
             } catch (error) {
                 console.error("Gracefully caught slide execution error at index: " + currentIndex, error);
