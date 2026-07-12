@@ -3,53 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CSI Christ Church - Universal Fullscreen 4:3 Display</title>
+    <title>CSI Christ Church - 640x384 LED Display</title>
     <style>
-        /* Base Setup & Fullscreen Black Background */
+        /* Exact Sizing Constraints for HDPlayer 640x384 Area */
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
-        html, body {
-            width: 100%;
-            height: 100%;
-            background: #000000;
+        body, html {
+            width: 640px;
+            height: 384px;
             overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
             font-family: 'Arial Black', 'Impact', sans-serif;
+            background: #000000;
             color: #ffffff;
-            cursor: pointer;
         }
         
-        /* Strict 4:3 Aspect Ratio Canvas Frame */
+        /* The Canvas perfectly matches your HDPlayer width and height */
         .canvas {
             width: 640px;
-            height: 480px;
-            position: relative;
+            height: 384px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            background-size: cover;
+            background-size: 100% 100%; /* Forces the background image to fill 640x384 exactly */
             background-position: center;
             transition: background-image 0.6s ease-in-out;
-            box-shadow: 0 0 50px rgba(0,0,0,1);
-            transform-origin: center center;
         }
         
-        /* Top Header Banner Style */
+        /* Optimized Header Banner for 384px Height */
         .header-banner {
             background: linear-gradient(180deg, #ffd700 0%, #cca100 100%);
             color: #000000;
             text-align: center;
-            padding: 12px 0;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.8);
+            padding: 6px 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.8);
             z-index: 10;
         }
         .header-banner h1 {
-            font-size: 32px;
+            font-size: 26px;
             font-weight: 900;
             text-transform: uppercase;
             letter-spacing: 1px;
@@ -57,55 +50,55 @@
         }
         .header-banner p {
             font-family: 'Arial', sans-serif;
-            font-size: 14px;
+            font-size: 12px;
             font-weight: bold;
-            letter-spacing: 3px;
-            margin-top: 2px;
+            letter-spacing: 2px;
+            margin-top: 1px;
         }
 
-        /* Centered Viewport Context Box */
+        /* Viewport adjusted to maximize the remaining 384px vertical workspace */
         .viewport {
             flex-grow: 1;
             display: flex;
             justify-content: center;
             align-items: center;
             text-align: center;
-            padding: 0 20px;
+            padding: 0 10px;
             z-index: 5;
         }
         .slide-content {
             width: 100%;
             animation: slideIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-            background: rgba(0, 0, 0, 0.75); /* Deep translucent layout shield */
-            padding: 24px 15px;
-            border-radius: 16px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(0, 0, 0, 0.72); /* Translucent shield layer for readability */
+            padding: 14px 10px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
         }
         @keyframes slideIn {
-            from { opacity: 0; transform: translateY(20px); }
+            from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Bold Text Presentation Layers */
+        /* Font Sizes re-balanced for 640x384 space */
         .line-1 {
-            font-size: 34px;
+            font-size: 28px;
             font-weight: 900;
             color: #ffffff;
-            line-height: 1.25;
-            margin-bottom: 16px;
-            text-shadow: 0 4px 12px rgba(0, 0, 0, 1), 0 0 25px rgba(0, 0, 0, 0.8);
+            line-height: 1.2;
+            margin-bottom: 10px;
+            text-shadow: 0 3px 10px rgba(0, 0, 0, 1), 0 0 20px rgba(0, 0, 0, 0.8);
         }
         
         .line-2 {
-            font-size: 26px;
+            font-size: 22px;
             font-weight: 900;
             color: #000000;
-            padding: 12px 0;
+            padding: 8px 0;
             width: 100%;
             text-transform: uppercase;
             letter-spacing: 1px;
-            margin-bottom: 18px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.7);
+            margin-bottom: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.6);
         }
         .wedding-ribbon {
             background: linear-gradient(90deg, #ffe033 0%, #ff9900 100%);
@@ -115,28 +108,23 @@
         }
 
         .line-3 {
-            font-size: 24px;
+            font-size: 20px;
             font-weight: 900;
             color: #ff2a75;
             text-transform: uppercase;
-            letter-spacing: 2px;
-            text-shadow: 0 3px 6px rgba(0,0,0,1);
+            letter-spacing: 1.5px;
+            text-shadow: 0 2px 5px rgba(0,0,0,1);
         }
         
         /* Auto-Spliced Extra Family Meta Line */
         .line-extra {
             font-family: 'Arial', sans-serif;
-            font-size: 18px;
+            font-size: 16px;
             font-weight: 900;
             color: #00ffcc;
-            margin-top: 14px;
-            text-shadow: 0 2px 5px rgba(0,0,0,1);
-            letter-spacing: 1px;
-        }
-
-        /* Hides cursor in fullscreen mode for clean aesthetics */
-        body:fullscreen {
-            cursor: none;
+            margin-top: 8px;
+            text-shadow: 0 2px 4px rgba(0,0,0,1);
+            letter-spacing: 0.5px;
         }
     </style>
 </head>
@@ -152,25 +140,18 @@
             <div id="display-card" class="slide-content"></div>
         </div>
         
-        <div style="height: 15px;"></div>
+        <div style="height: 10px;"></div>
     </div>
 
     <script>
-        /************************************************************************
-         * BACKGROUND IMAGE CONFIG
-         * These are RELATIVE paths — the images must sit in the SAME folder
-         * as this HTML file in your GitHub repo (same branch).
-         * If your images are inside a subfolder, e.g. "images/", change to:
-         *   wedding: "url('images/wedding-bg.png')"
-         * File names are case-sensitive — must match exactly what's in the repo.
-         ************************************************************************/
+        // High-quality live internet-hosted backgrounds
         const bgImages = {
-            wedding: "url('wedding-bg.png')",
-            birthday: "url('birthday-bg.png')"
+            wedding: "url('https://i.ibb.co/LdxYVq9/wedding-bg.png')",
+            birthday: "url('https://i.ibb.co/VvZ6W5p/birthday-bg.png')"
         };
 
         /************************************************************************
-         * DATA REGISTRY ZONE (Add your 20 weddings and 10 birthdays here)
+         * DATA REGISTRY ZONE (Put your 20 weddings and 10 birthdays here)
          ************************************************************************/
         const rawData = [
             // === WEDDINGS ===
@@ -187,19 +168,7 @@
         const mainCanvas = document.getElementById('main-canvas');
         const displayCard = document.getElementById('display-card');
         let currentIndex = 0;
-        const slideDuration = 6000;
-
-        // Auto Zoom Engine: Calculates and scales the 4:3 panel to perfectly fit the screen window
-        function resizeCanvas() {
-            const scaleX = window.innerWidth / 640;
-            const scaleY = window.innerHeight / 480;
-            // Use contain scaling or cover scaling depending on preference. 
-            // Math.min fits perfectly with bars if aspect ratios mismatch; Math.max zooms to complete edges.
-            const scale = Math.min(scaleX, scaleY); 
-            mainCanvas.style.transform = `scale(${scale})`;
-        }
-        window.addEventListener('resize', resizeCanvas);
-        window.addEventListener('load', resizeCanvas);
+        const slideDuration = 6000; // 6 seconds per wish slide
 
         function updateSlide() {
             if (rawData.length === 0) return;
@@ -258,17 +227,6 @@
 
             currentIndex = (currentIndex + 1) % rawData.length;
         }
-
-        // Fullscreen Toggle on Mouse Click
-        document.body.addEventListener('click', () => {
-            if (!document.fullscreenElement) {
-                document.documentElement.requestFullscreen().catch(err => {
-                    console.log(`Error entering fullscreen: ${err.message}`);
-                });
-            } else {
-                document.exitFullscreen();
-            }
-        });
 
         updateSlide();
         setInterval(updateSlide, slideDuration);
