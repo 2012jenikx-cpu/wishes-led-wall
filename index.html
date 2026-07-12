@@ -3,25 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CSI Christ Church - Live Connected LED Panel</title>
+    <title>CSI Christ Church - Universal Responsive LED Panel</title>
     <style>
-        /* Strict 480p 4:3 LED Wall Sizing Constraints */
+        /* Modern CSS Resets for Cross-Platform Flexibility */
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
-        body {
-            width: 640px;
-            height: 480px;
+        body, html {
+            width: 100%;
+            height: 100%;
             overflow: hidden;
             font-family: 'Arial Black', 'Impact', sans-serif;
             background: #000000;
             color: #ffffff;
         }
+        
+        /* The Canvas container scales dynamically based on the current active display size */
         .canvas {
-            width: 640px;
-            height: 480px;
+            width: 100vw;
+            height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -30,71 +32,74 @@
             transition: background-image 0.6s ease-in-out;
         }
         
-        /* High-Contrast Full Width Top Banner Header */
+        /* High-Contrast Dynamic Header Banner */
         .header-banner {
-            background: #ffd700; /* Pure gold tone banner */
+            background: #ffd700;
             color: #000000;
             text-align: center;
-            padding: 10px 0;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.9);
+            padding: 1.5vh 0;
+            box-shadow: 0 0.5vh 2vh rgba(0,0,0,0.9);
+            z-index: 10;
         }
         .header-banner h1 {
-            font-size: 28px;
+            font-size: 4.5vh;
             font-weight: 900;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 0.1vw;
             line-height: 1.1;
         }
         .header-banner p {
             font-family: 'Arial', sans-serif;
-            font-size: 13px;
+            font-size: 2vh;
             font-weight: bold;
-            letter-spacing: 1px;
-            margin-top: 2px;
+            letter-spacing: 0.2vw;
+            margin-top: 0.2vh;
         }
 
-        /* Content Viewport Frame */
+        /* Fully Fluid Adaptive Viewport Frame */
         .viewport {
             flex-grow: 1;
             display: flex;
             justify-content: center;
             align-items: center;
             text-align: center;
-            padding: 0 15px;
+            padding: 2vh 3vw;
+            z-index: 5;
         }
         .slide-content {
             width: 100%;
+            max-width: 90vw;
             animation: slideIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-            background: rgba(0, 0, 0, 0.70); /* Semi-transparent shield panel to maximize typography visibility over live photos */
-            padding: 22px 15px;
-            border-radius: 16px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+            background: rgba(0, 0, 0, 0.75);
+            padding: 4vh 4vw;
+            border-radius: 2vh;
+            box-shadow: 0 1.5vh 4vh rgba(0,0,0,0.8);
         }
         @keyframes slideIn {
-            from { opacity: 0; transform: translateY(15px); }
+            from { opacity: 0; transform: translateY(2vh); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Bold 3-Line + Extra Automated Layout */
+        /* Typography Scales Dynamically on Element Heights via viewport units */
         .line-1 {
-            font-size: 32px;
+            font-size: 5vh;
             font-weight: 900;
             color: #ffffff;
-            line-height: 1.2;
-            margin-bottom: 16px;
-            text-shadow: 0 4px 12px rgba(0, 0, 0, 1), 0 0 25px rgba(0, 0, 0, 0.9);
+            line-height: 1.3;
+            margin-bottom: 2.5vh;
+            text-shadow: 0 0.5vh 1.5vh rgba(0, 0, 0, 1), 0 0 3vh rgba(0, 0, 0, 0.9);
         }
         
         .line-2 {
-            font-size: 26px;
+            font-size: 4vh;
             font-weight: 900;
             color: #000000;
-            padding: 12px 0;
+            padding: 1.8vh 0;
             width: 100%;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 18px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.7);
+            letter-spacing: 0.1vw;
+            margin-bottom: 2.5vh;
+            box-shadow: 0 0.8vh 2vh rgba(0,0,0,0.7);
         }
         .wedding-ribbon {
             background: linear-gradient(90deg, #ffe033 0%, #ff9900 100%);
@@ -104,23 +109,23 @@
         }
 
         .line-3 {
-            font-size: 24px;
+            font-size: 3.5vh;
             font-weight: 900;
-            color: #ff2a75; /* Neon Red/Pink for high readability */
+            color: #ff2a75;
             text-transform: uppercase;
-            letter-spacing: 2px;
-            text-shadow: 0 3px 6px rgba(0,0,0,1);
+            letter-spacing: 0.3vw;
+            text-shadow: 0 0.4vh 0.8vh rgba(0,0,0,1);
         }
         
-        /* Auto-generated Extra Line styling */
+        /* Auto-generated Extra Relation Line Layout */
         .line-extra {
             font-family: 'Arial', sans-serif;
-            font-size: 18px;
+            font-size: 2.8vh;
             font-weight: 900;
-            color: #00ffcc; /* Vivid neon mint */
-            margin-top: 14px;
-            text-shadow: 0 2px 5px rgba(0,0,0,1);
-            letter-spacing: 0.5px;
+            color: #00ffcc;
+            margin-top: 2.2vh;
+            text-shadow: 0 0.3vh 0.6vh rgba(0,0,0,1);
+            letter-spacing: 0.1vw;
         }
     </style>
 </head>
@@ -136,28 +141,25 @@
             <div id="display-card" class="slide-content"></div>
         </div>
         
-        <div style="height: 15px;"></div>
+        <div style="height: 2vh;"></div>
     </div>
 
     <script>
-        // Internet-hosted high-resolution backgrounds mapping directly to your panels
         const bgImages = {
             wedding: "url('https://i.ibb.co/LdxYVq9/wedding-bg.png')",
             birthday: "url('https://i.ibb.co/VvZ6W5p/birthday-bg.png')"
         };
 
         /************************************************************************
-         * DATA REGISTRY ZONE
-         * Paste your 20 Wedding and 10 Birthday data models below.
+         * DATA REGISTRY ZONE (Put your 20 weddings and 10 birthdays here)
          ************************************************************************/
         const rawData = [
-            // === WEDDING DATA ENTRIES ===
+            // === WEDDINGS ===
             { husband: "ANUBALAN S", wife: "NIRMALA A", year: "2001", date: "25th June" },
             { husband: "JENIX G", wife: "RINISHA ANGELIN A", year: "2018", date: "25th June" },
-            { husband: "JOHNSON J", wife: "AGNES ROSELINE", year: "2003", date: "25th June" },
             { husband: "JOHNSON KOIL RAJAN R D", wife: "AMUTHA RAJAN R", year: "1996", date: "25th June" },
 
-            // === BIRTHDAY DATA ENTRIES ===
+            // === BIRTHDAYS ===
             { name: "Mr VASAN DEVARAJ", year: "1944", date: "26th June" }, 
             { name: "Mrs JEBA VINOLIYA A W/O AUGUSTIN GNANASEKAR", year: "1979", date: "26th June" },
             { name: "Mr ASWIN DEEPAK N S/O NATARAJAN P", year: "1998", date: "26th June" }
@@ -166,7 +168,7 @@
         const mainCanvas = document.getElementById('main-canvas');
         const displayCard = document.getElementById('display-card');
         let currentIndex = 0;
-        const slideDuration = 6000; // 6 seconds display time per screen slide
+        const slideDuration = 6000;
 
         function updateSlide() {
             if (rawData.length === 0) return;
@@ -181,7 +183,6 @@
             let extraLineHTML = "";
             let ribbonClass = "";
 
-            // 1. AUTOMATED WEDDING ENGINE
             if (item.husband && item.wife) {
                 let hName = item.husband.replace(/^(Mr|Mrs|Ms)\.?\s+/i, '');
                 let wName = item.wife.replace(/^(Mr|Mrs|Ms)\.?\s+/i, '');
@@ -192,12 +193,10 @@
                 ribbonClass = "wedding-ribbon";
                 mainCanvas.style.backgroundImage = bgImages.wedding;
             } 
-            // 2. AUTOMATED BIRTHDAY ENGINE
             else if (item.name) {
                 let rawName = item.name;
                 let detectedExtra = "";
 
-                // Automated split logic handles formatting relationship lines natively
                 const match = rawName.match(/\s+(W\/O|S\/O|D\/O|H\/O)\s+.+$/i);
                 if (match) {
                     detectedExtra = match[0].trim();
@@ -215,7 +214,6 @@
                 }
             }
 
-            // Inject Content Elements
             displayCard.innerHTML = `
                 <div class="line-1">${line1}</div>
                 <div class="line-2 ${ribbonClass}">${line2}</div>
@@ -223,7 +221,7 @@
                 ${extraLineHTML}
             `;
 
-            // Reset CSS text transition animation triggers
+            // Reset CSS transitions dynamically
             displayCard.style.animation = 'none';
             displayCard.offsetHeight; 
             displayCard.style.animation = null;
