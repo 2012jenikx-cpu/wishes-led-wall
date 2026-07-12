@@ -1,165 +1,147 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ta">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CSI Christ Church - Premium Layout</title>
+    <title>Church LED Display - Celebration Showcase</title>
     <style>
-        /* Sizing Constraints for HDPlayer 640x384 Area */
-        * {
+        /* Base configuration directly from your working template */
+        body, html { 
+            margin: 0; 
+            padding: 0; 
+            width: 100%; 
+            height: 100%; 
+            overflow: hidden; 
+            background-color: black; 
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; 
+        }
+        #bg { 
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%; 
+            background-size: cover; 
+            background-position: center; 
+            transition: opacity 1s ease-in-out; 
+        }
+        .overlay { 
+            position: absolute; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%; 
+            background: radial-gradient(circle, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.65) 100%); 
+            z-index: 5; 
+        }
+        .container { 
+            position: relative; 
+            z-index: 10; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center; 
+            height: 100%; 
+            padding: 20px; 
+            text-align: center; 
             box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-        body, html {
-            width: 640px;
-            height: 384px;
-            overflow: hidden;
-            font-family: 'Arial Black', 'Impact', sans-serif;
-            background: #000000;
-            color: #ffffff;
-        }
-        
-        /* Master Layout Canvas */
-        .canvas {
-            width: 640px;
-            height: 384px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            align-items: center;
-            padding: 16px;
-            background-size: 100% 100%;
-            background-position: center;
-            transition: background-image 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        
-        /* Modern Minimalist Floating Church Tag */
-        .church-tag {
-            text-align: center;
-            z-index: 10;
-            background: rgba(0, 0, 0, 0.6);
-            padding: 4px 20px;
-            border-radius: 50px;
-            border: 1px solid rgba(255, 215, 0, 0.3);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-        }
-        .church-tag h1 {
-            color: #ffd700; /* Royal Gold */
-            font-size: 18px;
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            line-height: 1.1;
-        }
-        .church-tag p {
-            font-family: 'Arial', sans-serif;
-            color: #ffffff;
-            font-size: 9px;
-            font-weight: bold;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            margin-top: 1px;
         }
 
-        /* Floating Centerpiece Showcase Card */
-        .viewport {
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin: 10px 0;
-            z-index: 5;
-        }
-        .slide-card {
-            width: 560px;
-            background: linear-gradient(135deg, rgba(10, 10, 15, 0.85) 0%, rgba(0, 0, 0, 0.9) 100%);
-            padding: 18px 20px;
-            border-radius: 16px;
-            text-align: center;
-            box-shadow: 0 12px 25px rgba(0,0,0,0.8);
-            animation: cardPop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-        }
-        @keyframes cardPop {
-            from { opacity: 0; transform: scale(0.92) translateY(10px); }
-            to { opacity: 1; transform: scale(1) translateY(0); }
-        }
-
-        /* Elegantly Formatted Typography Lines */
-        .line-names {
-            font-size: 26px;
-            font-weight: 900;
-            color: #ffffff;
-            line-height: 1.2;
-            margin-bottom: 12px;
-            text-shadow: 0 4px 8px rgba(0,0,0,1);
+        /* Modern Frosted Glass Presentation Card */
+        .ui-card {
+            background: rgba(15, 15, 25, 0.75);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 30px 40px;
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+            max-width: 90%;
+            width: 580px;
+            box-sizing: border-box;
         }
         
-        /* Modern Floating Badge Pill instead of full-width ribbon */
-        .badge-container {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 12px;
-        }
-        .celebration-badge {
+        /* Modern Premium Heading Pill */
+        #heading-line {
+            display: inline-block;
             font-size: 16px;
-            font-weight: 900;
-            color: #000000;
-            padding: 6px 24px;
-            border-radius: 50px;
+            color: #ffd700; 
+            font-weight: 800;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.4);
-        }
-        .wedding-theme {
-            background: linear-gradient(90deg, #ffe033 0%, #ffaa00 100%);
-        }
-        .birthday-theme {
-            background: linear-gradient(90deg, #00f2fe 0%, #0072ff 100%);
+            letter-spacing: 3px;
+            margin-bottom: 20px;
+            background: rgba(255, 215, 0, 0.1);
+            padding: 6px 20px;
+            border-radius: 50px;
+            border: 1px solid rgba(255, 215, 0, 0.25);
         }
 
-        .line-event-date {
-            font-size: 18px;
-            font-weight: 900;
-            color: #ff2a75;
+        /* Clean High-Contrast Typography Layers */
+        #names-line { 
+            font-size: 38px; 
+            font-weight: 900; 
+            color: #ffffff;
+            text-shadow: 0 4px 12px rgba(0,0,0,0.5);
+            line-height: 1.3; 
+            margin-bottom: 16px; 
+        }
+        #milestone-line { 
+            font-size: 22px; 
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 600; 
+            text-shadow: 0 2px 4px rgba(0,0,0,0.4);
+            margin-bottom: 18px;
+        }
+        #date-line {
+            font-size: 20px;
+            color: #ff477e; /* Radiant high-visibility accent */
+            font-weight: 800;
             text-transform: uppercase;
-            letter-spacing: 2px;
-            text-shadow: 0 2px 4px rgba(0,0,0,1);
+            letter-spacing: 1.5px;
         }
         
-        /* Sub-metadata line */
-        .line-relation {
-            font-family: 'Arial', sans-serif;
-            font-size: 14px;
-            font-weight: 900;
-            color: #00ffcc;
-            margin-top: 8px;
+        /* Relationship Subtext */
+        #relation-line {
+            font-size: 16px;
+            color: #00f5d4; /* Vivid premium cyan */
+            font-weight: 700;
+            margin-top: 12px;
             text-transform: uppercase;
             letter-spacing: 1px;
-            text-shadow: 0 2px 4px rgba(0,0,0,1);
+            opacity: 0.95;
+        }
+        
+        .watermark { 
+            position: absolute; 
+            bottom: 20px; 
+            left: 30px; 
+            font-size: 14px; 
+            font-weight: 800; 
+            color: rgba(255, 255, 255, 0.35); 
+            z-index: 20; 
+            letter-spacing: 3px; 
+            text-transform: uppercase;
         }
     </style>
 </head>
 <body>
-
-    <div class="canvas" id="main-canvas">
-        <!-- Floating Header -->
-        <div class="church-tag">
-            <h1>CSI Christ Church</h1>
-            <p>Coimbatore</p>
+    <div id="bg"></div>
+    <div class="overlay"></div>
+    
+    <div class="container">
+        <!-- Modern UI Wrapper -->
+        <div class="ui-card">
+            <div id="heading-line"></div>
+            <div id="names-line">Loading...</div>
+            <div id="milestone-line"></div>
+            <div id="date-line"></div>
+            <div id="relation-line"></div>
         </div>
-
-        <!-- Center Stage Presenter -->
-        <div class="viewport">
-            <div id="display-card" class="slide-card"></div>
-        </div>
-        
-        <!-- Bottom Safety Spacer to Frame Content Perfectly -->
-        <div style="height: 5px;"></div>
     </div>
+    
+    <div class="watermark">MEDIATEAM</div>
 
     <script>
-        // Points directly to the local images inside your GitHub root directory
         const bgImages = {
             wedding: "url('wedding.png')",
             birthday: "url('birthday.png')"
@@ -180,33 +162,31 @@
             { name: "Mr ASWIN DEEPAK N S/O NATARAJAN P", year: "1998", date: "26th June" }
         ];
 
-        const mainCanvas = document.getElementById('main-canvas');
-        const displayCard = document.getElementById('display-card');
         let currentIndex = 0;
-        const slideDuration = 6000;
+        const slideDuration = 7000; 
 
-        function updateSlide() {
+        function refreshContent() {
             if (rawData.length === 0) return;
             
             const item = rawData[currentIndex];
             const currentYear = new Date().getFullYear();
             const milestone = currentYear - parseInt(item.year);
             
-            let namesLine = "";
-            let badgeText = "";
-            let dateLine = "";
-            let relationLineHTML = "";
-            let themeClass = "";
+            let headingText = "";
+            let names = "";
+            let milestoneText = "";
+            let dateText = "";
+            let relationText = "";
 
             if (item.husband && item.wife) {
                 let hName = item.husband.replace(/^(Mr|Mrs|Ms)\.?\s+/i, '');
                 let wName = item.wife.replace(/^(Mr|Mrs|Ms)\.?\s+/i, '');
                 
-                namesLine = `Mr. ${hName} & Mrs. ${wName}`;
-                badgeText = `Celebrating ${milestone} Years`;
-                dateLine = `Wedding Day: ${item.date}`;
-                themeClass = "wedding-theme";
-                mainCanvas.style.backgroundImage = bgImages.wedding;
+                headingText = "Wedding Wish";
+                names = `Mr. ${hName}<br>& Mrs. ${wName}`;
+                milestoneText = `Celebrating ${milestone} Years of Marriage`;
+                dateText = `Wedding Day: ${item.date}`;
+                document.getElementById('bg').style.backgroundImage = bgImages.wedding;
             } 
             else if (item.name) {
                 let rawName = item.name;
@@ -218,35 +198,32 @@
                     rawName = rawName.replace(match[0], "").trim();
                 }
 
-                namesLine = rawName;
-                badgeText = `${milestone} Years of Life`;
-                dateLine = `Birthday: ${item.date}`;
-                themeClass = "birthday-theme";
-                mainCanvas.style.backgroundImage = bgImages.birthday;
-                
-                if (detectedExtra) {
-                    relationLineHTML = `<div class="line-relation">${detectedExtra}</div>`;
-                }
+                headingText = "Birthday Wish";
+                names = rawName;
+                milestoneText = `Celebrating ${milestone} Years of Life`;
+                dateText = `Birthday: ${item.date}`;
+                relationText = detectedExtra;
+                document.getElementById('bg').style.backgroundImage = bgImages.birthday;
             }
 
-            displayCard.innerHTML = `
-                <div class="line-names">${namesLine}</div>
-                <div class="badge-container">
-                    <div class="celebration-badge ${themeClass}">${badgeText}</div>
-                </div>
-                <div class="line-event-date">${dateLine}</div>
-                ${relationLineHTML}
-            `;
-
-            displayCard.style.animation = 'none';
-            displayCard.offsetHeight; 
-            displayCard.style.animation = null;
+            document.getElementById('heading-line').innerText = headingText;
+            document.getElementById('names-line').innerHTML = names;
+            document.getElementById('milestone-line').innerText = milestoneText;
+            document.getElementById('date-line').innerText = dateText;
+            
+            const relElement = document.getElementById('relation-line');
+            if (relationText) {
+                relElement.innerText = relationText;
+                relElement.style.display = "block";
+            } else {
+                relElement.style.display = "none";
+            }
 
             currentIndex = (currentIndex + 1) % rawData.length;
         }
 
-        updateSlide();
-        setInterval(updateSlide, slideDuration);
+        refreshContent();
+        setInterval(refreshContent, slideDuration);
     </script>
 </body>
 </html>
