@@ -3,103 +3,109 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CSI Christ Church - Universal Responsive LED Panel</title>
+    <title>CSI Christ Church - Universal Fullscreen 4:3 Display</title>
     <style>
-        /* Modern CSS Resets for Cross-Platform Flexibility */
+        /* Base Setup & Fullscreen Black Background */
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
-        body, html {
+        html, body {
             width: 100%;
             height: 100%;
-            overflow: hidden;
-            font-family: 'Arial Black', 'Impact', sans-serif;
             background: #000000;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Arial Black', 'Impact', sans-serif;
             color: #ffffff;
+            cursor: pointer;
         }
         
-        /* The Canvas container scales dynamically based on the current active display size */
+        /* Strict 4:3 Aspect Ratio Canvas Frame */
         .canvas {
-            width: 100vw;
-            height: 100vh;
+            width: 640px;
+            height: 480px;
+            position: relative;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             background-size: cover;
             background-position: center;
             transition: background-image 0.6s ease-in-out;
+            box-shadow: 0 0 50px rgba(0,0,0,1);
+            transform-origin: center center;
         }
         
-        /* High-Contrast Dynamic Header Banner */
+        /* Top Header Banner Style */
         .header-banner {
-            background: #ffd700;
+            background: linear-gradient(180deg, #ffd700 0%, #cca100 100%);
             color: #000000;
             text-align: center;
-            padding: 1.5vh 0;
-            box-shadow: 0 0.5vh 2vh rgba(0,0,0,0.9);
+            padding: 12px 0;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.8);
             z-index: 10;
         }
         .header-banner h1 {
-            font-size: 4.5vh;
+            font-size: 32px;
             font-weight: 900;
             text-transform: uppercase;
-            letter-spacing: 0.1vw;
+            letter-spacing: 1px;
             line-height: 1.1;
         }
         .header-banner p {
             font-family: 'Arial', sans-serif;
-            font-size: 2vh;
+            font-size: 14px;
             font-weight: bold;
-            letter-spacing: 0.2vw;
-            margin-top: 0.2vh;
+            letter-spacing: 3px;
+            margin-top: 2px;
         }
 
-        /* Fully Fluid Adaptive Viewport Frame */
+        /* Centered Viewport Context Box */
         .viewport {
             flex-grow: 1;
             display: flex;
             justify-content: center;
             align-items: center;
             text-align: center;
-            padding: 2vh 3vw;
+            padding: 0 20px;
             z-index: 5;
         }
         .slide-content {
             width: 100%;
-            max-width: 90vw;
             animation: slideIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-            background: rgba(0, 0, 0, 0.75);
-            padding: 4vh 4vw;
-            border-radius: 2vh;
-            box-shadow: 0 1.5vh 4vh rgba(0,0,0,0.8);
+            background: rgba(0, 0, 0, 0.75); /* Deep translucent layout shield */
+            padding: 24px 15px;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
         @keyframes slideIn {
-            from { opacity: 0; transform: translateY(2vh); }
+            from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Typography Scales Dynamically on Element Heights via viewport units */
+        /* Bold Text Presentation Layers */
         .line-1 {
-            font-size: 5vh;
+            font-size: 34px;
             font-weight: 900;
             color: #ffffff;
-            line-height: 1.3;
-            margin-bottom: 2.5vh;
-            text-shadow: 0 0.5vh 1.5vh rgba(0, 0, 0, 1), 0 0 3vh rgba(0, 0, 0, 0.9);
+            line-height: 1.25;
+            margin-bottom: 16px;
+            text-shadow: 0 4px 12px rgba(0, 0, 0, 1), 0 0 25px rgba(0, 0, 0, 0.8);
         }
         
         .line-2 {
-            font-size: 4vh;
+            font-size: 26px;
             font-weight: 900;
             color: #000000;
-            padding: 1.8vh 0;
+            padding: 12px 0;
             width: 100%;
             text-transform: uppercase;
-            letter-spacing: 0.1vw;
-            margin-bottom: 2.5vh;
-            box-shadow: 0 0.8vh 2vh rgba(0,0,0,0.7);
+            letter-spacing: 1px;
+            margin-bottom: 18px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.7);
         }
         .wedding-ribbon {
             background: linear-gradient(90deg, #ffe033 0%, #ff9900 100%);
@@ -109,23 +115,28 @@
         }
 
         .line-3 {
-            font-size: 3.5vh;
+            font-size: 24px;
             font-weight: 900;
             color: #ff2a75;
             text-transform: uppercase;
-            letter-spacing: 0.3vw;
-            text-shadow: 0 0.4vh 0.8vh rgba(0,0,0,1);
+            letter-spacing: 2px;
+            text-shadow: 0 3px 6px rgba(0,0,0,1);
         }
         
-        /* Auto-generated Extra Relation Line Layout */
+        /* Auto-Spliced Extra Family Meta Line */
         .line-extra {
             font-family: 'Arial', sans-serif;
-            font-size: 2.8vh;
+            font-size: 18px;
             font-weight: 900;
             color: #00ffcc;
-            margin-top: 2.2vh;
-            text-shadow: 0 0.3vh 0.6vh rgba(0,0,0,1);
-            letter-spacing: 0.1vw;
+            margin-top: 14px;
+            text-shadow: 0 2px 5px rgba(0,0,0,1);
+            letter-spacing: 1px;
+        }
+
+        /* Hides cursor in fullscreen mode for clean aesthetics */
+        body:fullscreen {
+            cursor: none;
         }
     </style>
 </head>
@@ -141,7 +152,7 @@
             <div id="display-card" class="slide-content"></div>
         </div>
         
-        <div style="height: 2vh;"></div>
+        <div style="height: 15px;"></div>
     </div>
 
     <script>
@@ -151,7 +162,7 @@
         };
 
         /************************************************************************
-         * DATA REGISTRY ZONE (Put your 20 weddings and 10 birthdays here)
+         * DATA REGISTRY ZONE (Add your 20 weddings and 10 birthdays here)
          ************************************************************************/
         const rawData = [
             // === WEDDINGS ===
@@ -169,6 +180,18 @@
         const displayCard = document.getElementById('display-card');
         let currentIndex = 0;
         const slideDuration = 6000;
+
+        // Auto Zoom Engine: Calculates and scales the 4:3 panel to perfectly fit the screen window
+        function resizeCanvas() {
+            const scaleX = window.innerWidth / 640;
+            const scaleY = window.innerHeight / 480;
+            // Use contain scaling or cover scaling depending on preference. 
+            // Math.min fits perfectly with bars if aspect ratios mismatch; Math.max zooms to complete edges.
+            const scale = Math.min(scaleX, scaleY); 
+            mainCanvas.style.transform = `scale(${scale})`;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        window.addEventListener('load', resizeCanvas);
 
         function updateSlide() {
             if (rawData.length === 0) return;
@@ -221,13 +244,23 @@
                 ${extraLineHTML}
             `;
 
-            // Reset CSS transitions dynamically
             displayCard.style.animation = 'none';
             displayCard.offsetHeight; 
             displayCard.style.animation = null;
 
             currentIndex = (currentIndex + 1) % rawData.length;
         }
+
+        // Fullscreen Toggle on Mouse Click
+        document.body.addEventListener('click', () => {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(err => {
+                    console.log(`Error entering fullscreen: ${err.message}`);
+                });
+            } else {
+                document.exitFullscreen();
+            }
+        });
 
         updateSlide();
         setInterval(updateSlide, slideDuration);
