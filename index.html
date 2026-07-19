@@ -31,7 +31,7 @@
             left: 0; 
             width: 100%; 
             height: 100%; 
-            background: radial-gradient(circle, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.7) 100%); 
+            background: radial-gradient(circle, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.75) 100%); 
             z-index: 5; 
         }
         .container { 
@@ -47,14 +47,18 @@
             box-sizing: border-box;
         }
 
-        /* Modern Premium Glassmorphic Container */
+        /* Fixed Premium Glassmorphic Container */
         .ui-card {
+            background: rgba(255, 255, 255, 0.08);
             -webkit-backdrop-filter: blur(14px);
+            backdrop-filter: blur(14px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
             padding: 35px 40px;
             border-radius: 24px;
             max-width: 90%;
             width: 580px;
             box-sizing: border-box;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
         }
         
         /* Modern Premium Dynamic Heading Badge */
@@ -66,10 +70,10 @@
             text-transform: uppercase;
             letter-spacing: 3px;
             margin-bottom: 28px;
-            background: rgba(255, 215, 0, 0.1);
+            background: rgba(255, 215, 0, 0.15);
             padding: 6px 20px;
             border-radius: 50px;
-            border: 1px solid rgba(255, 215, 0, 0.25);
+            border: 1px solid rgba(255, 215, 0, 0.35);
         }
 
         /* High-Performance Readable Typography Layers */
@@ -77,20 +81,20 @@
             font-size: 36px; 
             font-weight: 900; 
             color: #ffffff;
-            text-shadow: 0 4px 12px rgba(0,0,0,0.6);
+            text-shadow: 0 4px 12px rgba(0,0,0,0.7);
             line-height: 1.4; 
             margin-bottom: 16px; 
         }
         #milestone-line { 
             font-size: 22px; 
-            color: rgba(255, 255, 255, 0.9);
+            color: rgba(255, 255, 255, 0.95);
             font-weight: 600; 
             text-shadow: 0 2px 4px rgba(0,0,0,0.5);
             margin-bottom: 18px;
         }
         #date-line {
             font-size: 25px;
-            color: #cd00bc; 
+            color: #ff66fa; 
             font-weight: 800;
             text-transform: uppercase;
             letter-spacing: 2px;
@@ -100,6 +104,7 @@
             font-weight: 900;
             display: inline-block;
             margin-right: 4px;
+            color: #ffffff;
         }
         
         .watermark { 
@@ -131,33 +136,22 @@
     <div class="watermark">MEDIATEAM</div>
 
     <script>
-        /************************
-         * DISPLAY SETTINGS (DURATION CONTROL)
-         * Change 3000 to your desired speed (in milliseconds)
-         ************************/
-        const slideDuration = 2000; // 3000 = 3 seconds per slide
+        const slideDuration = 2000; // 2 seconds per slide
 
-        // Binds local .jpeg background image files from your repository root
+        // Background image definitions
         const bgImages = {
             wedding: "url('wedding.jpeg')",
             birthday: "url('birthday.jpeg')"
         };
 
-        /************************
-         * DATA REGISTRY ZONE
-         * Paste, add, modify or remove items safely here. 
-         * Ensure every intermediate item ends with a comma (,).
-         * NOTE: "year" is only used for WEDDINGS (to calculate years married).
-         * For BIRTHDAYS, "year" is not required/used at all anymore -
-         * only the name and date are shown.
-         ************************/
+        // DATA REGISTRY ZONE (Fixed Typos like 21th -> 21st, 22th -> 22nd, 24rd -> 24th)
         const rawData = [
             // === WEDDINGS ===
             { husband: "CLEMENT DAVID S", wife: "BLESSY CLEMENT", year: "2018", date: "19th July" },
             { husband: "PRINCE P", wife: "KAVITHA P", year: "2009", date: "20th July" },
-            { husband: "SAMUEL KIRUBAKARAN P", wife: "PREMA RAJAKUMARI S", year: "2021", date: "21th July" },
+            { husband: "SAMUEL KIRUBAKARAN P", wife: "PREMA RAJAKUMARI S", year: "2021", date: "21st July" },
 
-            // === BIRTHDAYS (no year needed) ===
+            // === BIRTHDAYS ===
             { name: "Mrs GREETA MANOHAR RAJ", date: "19th July" }, 
             { name: "Mrs JULIET PACKIARAJ", date: "19th July" },
             { name: "Mr SEKAR S G", date: "19th July" },
@@ -186,31 +180,31 @@
             { name: "Mr ALEX STUWART M", date: "20th July" },
             { name: "Mr JOHN SAMUEL MOSES T", date: "20th July" },
             { name: "Mr SAM JOSHUA M", date: "20th July" },
-            { name: "Mrs SAROJINI THANGARAJ", date: "21th July" },
-            { name: "Mr GNANARAJ K", date: "21th July" },
-            { name: "Mrs SELVI D", date: "21th July" },
-            { name: "Mr SAMPATH K", date: "21th July" },
-            { name: "Mrs JULIET SHEEBA", date: "21th July" },
-            { name: "Mrs DANFI JEBA DEVAPRIYA S", date: "21th July" },
-            { name: "Mr VIMALSON CHRISTOPHER J", date: "21th July" },
-            { name: "Mrs AGUSTA LARANCY T", date: "21th July" },
-            { name: "Mr RIJO SARVIN", date: "21th July" },
-            { name: "Mrs SWETHA S", date: "21th July" },
-            { name: "Mr EBI DELIGHT PAUL I", date: "21th July" },
-            { name: "Mrs JESINTHS NARY A", date: "22th July" },
-            { name: "Mr DEVARAJ S", date: "22th July" },
-            { name: "Mr JAYAKUMAR T", date: "22th July" },
-            { name: "Mrs LATHA RANI K", date: "22th July" },
-            { name: "Mrs SELVI N", date: "22th July" },
-            { name: "Mr KAMARAJ S", date: "22th July" },
-            { name: "Mr RUBAN R", date: "22th July" },
-            { name: "Mrs JEBASANTHI R", date: "22th July" },
-            { name: "Mrs PRINCY PAULCIA", date: "22th July" },
-            { name: "Mrs JEBA SANGEETHA A", date: "22th July" },
-            { name: "Mr DEVA KIRUBA KARAN S", date: "22th July" },
-            { name: "Mr JOHN JOSHUA P", date: "22th July" },
-            { name: "Mr THOMAS D", date: "22th July" },
-            { name: "Mr SAMUEL ALEXANDER V", date: "22th July" },
+            { name: "Mrs SAROJINI THANGARAJ", date: "21st July" },
+            { name: "Mr GNANARAJ K", date: "21st July" },
+            { name: "Mrs SELVI D", date: "21st July" },
+            { name: "Mr SAMPATH K", date: "21st July" },
+            { name: "Mrs JULIET SHEEBA", date: "21st July" },
+            { name: "Mrs DANFI JEBA DEVAPRIYA S", date: "21st July" },
+            { name: "Mr VIMALSON CHRISTOPHER J", date: "21st July" },
+            { name: "Mrs AGUSTA LARANCY T", date: "21st July" },
+            { name: "Mr RIJO SARVIN", date: "21st July" },
+            { name: "Mrs SWETHA S", date: "21st July" },
+            { name: "Mr EBI DELIGHT PAUL I", date: "21st July" },
+            { name: "Mrs JESINTHS NARY A", date: "22nd July" },
+            { name: "Mr DEVARAJ S", date: "22nd July" },
+            { name: "Mr JAYAKUMAR T", date: "22nd July" },
+            { name: "Mrs LATHA RANI K", date: "22nd July" },
+            { name: "Mrs SELVI N", date: "22nd July" },
+            { name: "Mr KAMARAJ S", date: "22nd July" },
+            { name: "Mr RUBAN R", date: "22nd July" },
+            { name: "Mrs JEBASANTHI R", date: "22nd July" },
+            { name: "Mrs PRINCY PAULCIA", date: "22nd July" },
+            { name: "Mrs JEBA SANGEETHA A", date: "22nd July" },
+            { name: "Mr DEVA KIRUBA KARAN S", date: "22nd July" },
+            { name: "Mr JOHN JOSHUA P", date: "22nd July" },
+            { name: "Mr THOMAS D", date: "22nd July" },
+            { name: "Mr SAMUEL ALEXANDER V", date: "22nd July" },
             { name: "Mrs ANBARASU THANGAIAH", date: "23rd July" },
             { name: "Mr KIRUBAI RAJ", date: "23rd July" },
             { name: "Mrs SELVARANI T ", date: "23rd July" },
@@ -219,15 +213,15 @@
             { name: "Mr ALLWYN G", date: "23rd July" },
             { name: "Mrs CLARIBEL SHIRLY SELVIN", date: "23rd July" },
             { name: "Mr REGGAN ALBERT", date: "23rd July" },
-            { name: "Mr NIKOLAS RAJA I", date: "24rd July" },
-            { name: "Mrs SELVARANI K", date: "24rd July" },
-            { name: "Mrs BEULAH S", date: "24rd July" },
-            { name: "Mrs REVATHI PRINCE", date: "24rd July" },
-            { name: "Mrs JOAANA HELEN", date: "24rd July" },
-            { name: "Mr RAJESH KUMAR J", date: "24rd July" },
-            { name: "Ms PAVITHRA P", date: "24rd July" },
-            { name: "Mr JEGAN ALEX A S", date: "24rd July" },
-            { name: "Mr SELGIN GERSON M", date: "24rd July" },
+            { name: "Mr NIKOLAS RAJA I", date: "24th July" },
+            { name: "Mrs SELVARANI K", date: "24th July" },
+            { name: "Mrs BEULAH S", date: "24th July" },
+            { name: "Mrs REVATHI PRINCE", date: "24th July" },
+            { name: "Mrs JOAANA HELEN", date: "24th July" },
+            { name: "Mr RAJESH KUMAR J", date: "24th July" },
+            { name: "Ms PAVITHRA P", date: "24th July" },
+            { name: "Mr JEGAN ALEX A S", date: "24th July" },
+            { name: "Mr SELGIN GERSON M", date: "24th July" },
             { name: "Mrs SHANTHI R", date: "25th July" },
             { name: "Mrs JOSEPHINE THAYAMAL", date: "25th July" },
             { name: "Mrs PREMALA T", date: "25th July" },
@@ -245,7 +239,6 @@
 
         let currentIndex = 0;
 
-        // Wraps the leading number in a date string (e.g. "26th June") in a bigger span
         function formatDateBig(dateStr, label) {
             if (!dateStr) return "";
             const match = dateStr.match(/^(\d+)(.*)$/);
@@ -295,7 +288,7 @@
                 document.getElementById('date-line').innerHTML = dateHTML;
 
             } catch (error) {
-                console.error("Gracefully caught slide execution error at index: " + currentIndex, error);
+                console.error("Error at index: " + currentIndex, error);
             } finally {
                 currentIndex = (currentIndex + 1) % rawData.length;
             }
